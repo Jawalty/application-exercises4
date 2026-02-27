@@ -1,6 +1,6 @@
 ---
 title: "AE 03 - Visualizing Star Wars Characters"
-author: "Your Name"
+author: "Jackson Walterman"
 date: "`r Sys.Date()`"
 output: 
   html_document:
@@ -74,21 +74,21 @@ glimpse(starwars)
 
 **Answer the following questions:**
 
-**How many observations (rows) are there?** _____
+**How many observations (rows) are there?** ___87__
 
-**How many variables (columns) are there?** _____
+**How many variables (columns) are there?** __14___
 
 **Name three numerical variables:**
 
-1. _____
-2. _____
-3. _____
+1. _height____
+2. __mass___
+3. __birth year___
 
 **Name three categorical variables:**
 
-1. _____
-2. _____
-3. _____
+1. _films____
+2. _vehicles___
+3. _starships____
 
 **What does each observation represent?**
 
