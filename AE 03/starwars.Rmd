@@ -111,7 +111,7 @@ ggplot(starwars,
 
 **Your answer:**
 
-___________________________________________________________________________
+___________________Geom point overrides what was said________________________________________________________
 ___________________________________________________________________________
 
 **Task 2.2:** Why did this happen?
@@ -120,7 +120,7 @@ ___________________________________________________________________________
 
 **Your answer:**
 
-___________________________________________________________________________
+__________________Because it was set inside geom point_________________________________________________________
 ___________________________________________________________________________
 
 **The issue:** When you set `color = "pink"` inside `geom_point()`, it overrides the aesthetic mapping `color = gender` from `aes()`.
@@ -149,10 +149,10 @@ ggplot(starwars,
        aes(x = height, y = mass, color = gender, size = birth_year)) +
   geom_point(color = "#30509C") +
   labs(
-    title = "___",           # Title about relationship between height and mass
-    x = "___",               # What is on the x-axis?
-    y = "___",               # What is on the y-axis?
-    size = "___"             # What does size represent?
+    title = "_height vs mass__",           # Title about relationship between height and mass
+    x = "_height__",               # What is on the x-axis?
+    y = "_mass__",               # What is on the y-axis?
+    size = "_birth year__"             # What does size represent?
   )
 ```
 
@@ -166,7 +166,7 @@ ggplot(starwars,
 
 **Your answer:**
 
-___________________________________________________________________________
+______________Because Geom point overrides it_____________________________________________________________
 
 ---
 
@@ -188,12 +188,12 @@ starwars %>%
 **Now create your histogram:**
 ```{r histogram, eval = FALSE}
 # Fill in the blanks
-ggplot(starwars, aes(x = ___)) +
-  geom_histogram(binwidth = ___, fill = "steelblue", color = "white") +
+ggplot(starwars, aes(x = height)) +
+  geom_histogram(binwidth = 10, fill = "steelblue", color = "white") +
   labs(
-    title = "___",
-    x = "___",
-    y = "___"
+    title = "_Star Wars characters height differences__",
+    x = "_height__",
+    y = "_amount__"
   )
 ```
 
@@ -207,14 +207,14 @@ ggplot(starwars, aes(x = ___)) +
 
 **Your answer:**
 
-I chose a binwidth of _____ because ______________________________________
+I chose a binwidth of _10____ because ____it more accurately represents the spreaad of data__________________________________
 ___________________________________________________________________________
 
 **Task 4.2:** Describe the distribution. Is it symmetric, skewed left, or skewed right? Are there any outliers?
 
 **Your answer:**
 
-___________________________________________________________________________
+_______The data is skewed right, but still quite evenly spread.____________________________________________________________________
 ___________________________________________________________________________
 
 ---
@@ -236,12 +236,12 @@ Pick a numerical variable and a categorical variable and make a visualization to
 - birth_year by sex
 ```{r num-cat, eval = FALSE}
 # Your code here
-ggplot(starwars, aes(x = ___, y = ___)) +
+ggplot(starwars, aes(x = homeworld, y = birth_year)) +
   geom_boxplot(fill = "lightblue") +
   labs(
-    title = "___",
-    x = "___",
-    y = "___"
+    title = "_Star Wars characters homelands__",
+    x = "_homeworld__",
+    y = "_birth year__"
   )
 ```
 
@@ -249,7 +249,7 @@ ggplot(starwars, aes(x = ___, y = ___)) +
 
 What does this visualization tell you about the relationship between these two variables?
 
-___________________________________________________________________________
+____The homeworlds have a strong pattern being in the 50-250 range with one outlier being in the 600's ______________________________________________________________________
 ___________________________________________________________________________
 ___________________________________________________________________________
 
@@ -268,28 +268,28 @@ Pick a single categorical variable from the dataset and make a bar plot of its d
 - hair_color
 ```{r barplot,, eval = FALSE}
 # Your code here
-ggplot(starwars, aes(x = ___)) +
+ggplot(starwars, aes(x = sex)) +
   geom_bar(fill = "coral") +
   labs(
-    title = "___",
-    x = "___",
-    y = "___"
+    title = "_Star Wars characters genders__",
+    x = "_sex__",
+    y = "_amount__"
   )
 ```
 
 **Task 6.1:** Which category has the most observations?
 
-**Your answer:** _____
+**Your answer:** _There are mostly males in Star Wars____
 
 **Task 6.2:** If your plot has many categories with small bars that are hard to read, try flipping the coordinates:
 ```{r barplot-flipped, eval = FALSE}
 # Same code as above, but add coord_flip() at the end
-ggplot(starwars, aes(x = ___)) +
+ggplot(starwars, aes(x = sex)) +
   geom_bar(fill = "coral") +
   labs(
-    title = "___",
-    x = "___",
-    y = "___"
+    title = "_Star Wars characters genders__",
+    x = "_sex__",
+    y = "_amount__"
   ) +
   coord_flip()
 ```
@@ -315,14 +315,14 @@ Pick two categorical variables and make a visualization to visualize the relatio
 
 **Option 1: Stacked bar plot**
 ```{r cat-cat-stacked, eval = FALSE}
-# Your code here
-ggplot(starwars, aes(x = ___, fill = ___)) +
+
+ggplot(starwars, aes(x = gender, fill = species)) +
   geom_bar() +
   labs(
-    title = "___",
-    x = "___",
+    title = "_Star Wars characters genders__",
+    x = "_gender__",
     y = "Count",
-    fill = "___"
+    fill = "_species__"
   )
 ```
 
@@ -343,7 +343,7 @@ ggplot(starwars, aes(x = ___, fill = ___)) +
 
 What does this visualization tell you about the relationship between these two variables?
 
-___________________________________________________________________________
+_________There are many more male characters in Star Wars than there are female__________________________________________________________________
 ___________________________________________________________________________
 ___________________________________________________________________________
 
@@ -371,18 +371,18 @@ Pick two numerical variables and two categorical variables and make a visualizat
 ```{r multi, eval=FALSE}
 # You might want to filter first to avoid too many facets
 starwars_filtered <- starwars %>%
-  filter(species %in% c("Human", "Droid", "___"))  # Pick 3-4 species
+  filter(species %in% c("Human", "Droid", "ewok", "Aleena"))  # Pick 3-4 species
 
 # Your plot here
 ggplot(starwars_filtered, 
-       aes(x = ___, y = ___, color = ___)) +
+       aes(x = height, y = mass, color = gender)) +
   geom_point(size = 3) +
-  facet_wrap(~ ___) +
+  facet_wrap(~ species) +
   labs(
-    title = "___",
-    x = "___",
-    y = "___",
-    color = "___"
+    title = "_Heights and Masses of different species__",
+    x = "_height__",
+    y = "_mass__",
+    color = "_species__"
   )
 ```
 
@@ -390,7 +390,7 @@ ggplot(starwars_filtered,
 
 What patterns do you notice? How do the relationships differ across the facets?
 
-___________________________________________________________________________
+_______Droids and Aleenas are all male. There are many more humans spread across the data compared to the other two____________________________________________________________________
 ___________________________________________________________________________
 ___________________________________________________________________________
 ___________________________________________________________________________
@@ -403,21 +403,21 @@ ___________________________________________________________________________
 
 **Your answer:**
 
-___________________________________________________________________________
+___________A gg plot_was the most ideal due to the easy ways to adjust its visualization.____________________________________________________________
 ___________________________________________________________________________
 
 **Task 9.2:** What was the most interesting pattern or relationship you found?
 
 **Your answer:**
 
-___________________________________________________________________________
+______There are a lot of species I wasn't aware of in Star Wars, as well as how many more males there are than female._____________________________________________________________________
 ___________________________________________________________________________
 
 **Task 9.3:** What did you find most challenging about creating these visualizations?
 
 **Your answer:**
 
-___________________________________________________________________________
+______Remembering to keep all of the code clean, so I would say syntax._____________________________________________________________________
 
 ---
 
