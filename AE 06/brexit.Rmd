@@ -1,6 +1,6 @@
 ---
 title: "AE 06 - Brexit - Telling Different Stories with Data"
-author: "Your Name"
+author: "Jackson Walterman"
 date: "`r Sys.Date()`"
 output: 
   pdf_document:
@@ -162,7 +162,7 @@ ggplot(brexit, aes(y = opinion, fill = opinion)) +
 ## Exercise 1: Free Scales
 
 Add `scales = "free_x"` as an argument to the `facet_wrap()` function. How does the visualisation change? How is the story this visualisation telling different than the story the original plot tells?
-```{r free-scales, eval=FALSE, fig.width=10, fig.height=4}
+```{r free-scales, eval=TRUE, fig.width=10, fig.height=4}
 # Remember to change eval=FALSE to eval=TRUE!
 
 ggplot(brexit, aes(y = opinion, fill = opinion)) +
@@ -170,7 +170,7 @@ ggplot(brexit, aes(y = opinion, fill = opinion)) +
   facet_wrap(~region,
     nrow = 1, 
     labeller = label_wrap_gen(width = 12),
-    scales = ___  # Add "free_x" here
+    scales = "free_x" # Add "free_x" here
   ) +
   guides(fill = "none") +
   labs(
@@ -198,24 +198,20 @@ ggplot(brexit, aes(y = opinion, fill = opinion)) +
 
 **Your answer:**
 
-___________________________________________________________________________
-___________________________________________________________________________
-___________________________________________________________________________
-
+The x axis are proportionate to scale of that specific datam, for better visualization
 **Task 1.2:** How is the story this visualization tells different from the original plot?
 
 **Your answer:**
 
-**Original plot emphasizes:** ____________________________________________
+**Original plot emphasizes:** The size of the graphs since the x-axis are the same.
 
-**Free scales plot emphasizes:** __________________________________________
+**Free scales plot emphasizes:** It emphasizes the values on the x-axis sinc the graph sizes are the same.
 
 **Task 1.3:** Which visualization would be misleading if you wanted to compare the absolute number of responses across regions? Why?
 
 **Your answer:**
 
-___________________________________________________________________________
-___________________________________________________________________________
+The original plot would be misleading because you'd have to make guesses solely based on the size of the graphs.
 
 ---
 
@@ -226,13 +222,13 @@ First, calculate the proportion of wrong, right, and don't know answers in each 
 **How is the story this visualisation telling different than the story the original plot tells?**
 
 **Task 2.1:** Calculate proportions by region and opinion.
-```{r calculate-proportions, eval=FALSE}
+```{r calculate-proportions, eval=TRUE}
 # Remember to change eval=FALSE to eval=TRUE!
 
 brexit_prop <- brexit %>%
-  count(___, ___) %>%           # Count by region and opinion
-  group_by(___) %>%             # Group by region
-  mutate(prop = n / sum(___))   # Calculate proportion within each region
+  count(region, opinion) %>%           # Count by region and opinion
+  group_by(region) %>%             # Group by region
+  mutate(prop = n / sum(n))   # Calculate proportion within each region
 
 brexit_prop
 ```
@@ -252,7 +248,7 @@ brexit_prop
 ```{r plot-proportions, eval=FALSE, fig.width=10, fig.height=4}
 # Remember to change eval=FALSE to eval=TRUE!
 
-ggplot(brexit_prop, aes(y = opinion, x = ___, fill = opinion)) +
+ggplot(brexit_prop, aes(y = opinion, x = prop, fill = opinion)) +
   geom_col() +                  # Use geom_col() for already-calculated values
   facet_wrap(~region, nrow = 1, labeller = label_wrap_gen(width = 12)) +
   guides(fill = "none") +
@@ -268,7 +264,7 @@ ggplot(brexit_prop, aes(y = opinion, x = ___, fill = opinion)) +
     "Right" = "#67a9cf",
     "Don't know" = "gray"
   )) +
-  scale_x_continuous(labels = ___) +  # Format x-axis as percentages
+  scale_x_continuous(labels = percent_format()) +  # Format x-axis as percentages
   theme_minimal()
 ```
 
@@ -283,11 +279,11 @@ ggplot(brexit_prop, aes(y = opinion, x = ___, fill = opinion)) +
 
 **Your answer:**
 
-**Original plot (counts) shows:** _________________________________________
+**Original plot (counts) shows:** Number values
 
-**Proportion plot shows:** ________________________________________________
+**Proportion plot shows:** Percentage values
 
-**Which regions have the most "Wrong" responses as a proportion?** _______
+**Which regions have the most "Wrong" responses as a proportion?** Scotland
 
 ---
 
@@ -298,25 +294,25 @@ Recreate the same visualisation from the previous exercise, this time dodging th
 **How is the story this visualisation telling different than the story the previous plot tells?**
 
 **Task 3.1:** Create a dodged bar plot.
-```{r dodged-bars, eval=FALSE, fig.width=8, fig.height=5}
+```{r dodged-bars, eval=TRUE, fig.width=8, fig.height=5}
 # Remember to change eval=FALSE to eval=TRUE!
 
-ggplot(brexit_prop, aes(x = ___, y = ___, fill = ___)) +
-  geom_col(position = "___") +  # "dodge" makes bars side-by-side
+ggplot(brexit_prop, aes(x = region, y = prop, fill = opinion)) +
+  geom_col(position = "dodge") +  # "dodge" makes bars side-by-side
   labs(
     title = "Was Britain right/wrong to vote to leave EU?",
     subtitle = "YouGov Survey Results, 2-3 September 2019",
     caption = "Source: bit.ly/2lCJZVg",
-    x = "___",                  # Region label
-    y = "___",                  # Proportion label
-    fill = "___"                # Better legend title
+    x = "Region",                  # Region label
+    y = "Proportion",                  # Proportion label
+    fill = "Opinion"                # Better legend title
   ) +
   scale_fill_manual(values = c(
     "Wrong" = "#ef8a62",
     "Right" = "#67a9cf",
     "Don't know" = "gray"
   )) +
-  scale_y_continuous(labels = ___) +  # Format y-axis as percentages
+  scale_y_continuous(labels = percent_format()) +  # Format y-axis as percentages
   theme_minimal()
 ```
 
@@ -333,15 +329,14 @@ ggplot(brexit_prop, aes(x = ___, y = ___, fill = ___)) +
 
 **Task 3.2:** How is this visualization different from the faceted proportion plot?
 
-**Your answer:**
+**Your answer:** It swaps the axis of the values, and organizes it neatly.
 
-**Faceted plot makes it easier to:** ______________________________________
+**Faceted plot makes it easier to:** I don't see any real benefit that the faceted plot has in comparison to the dodged. I assume it's for individuals who prefer top view scales/values left and right, rather than top bottom.
 
-**Dodged plot makes it easier to:** _______________________________________
-
+**Dodged plot makes it easier to:** View all of the data in a more organized manner. You can compare the graphs muich easier since they are up and down, as well as in line with each otherl.
 **Task 3.3:** Which region shows the strongest opinion one way or the other (least "Don't know")?
 
-**Your answer:** _____
+**Your answer:** Scotland also has the least "don't know" values.
 
 ---
 
@@ -351,24 +346,18 @@ ggplot(brexit_prop, aes(x = ___, y = ___, fill = ___)) +
 
 **Your answer:**
 
-I would use the _______________ plot because ______________________________
-___________________________________________________________________________
-___________________________________________________________________________
+I would use the dodged plot because I prefer to view my data top down, from a left to right spread. It makes comparison easier since the size of the graphs are in line with each other.
 
 **Task 4.2:** You're writing a report comparing absolute numbers of respondents across regions. Which visualization would be most appropriate? Why?
 
 **Your answer:**
 
-___________________________________________________________________________
-___________________________________________________________________________
-
+The scales free_x visualization would be the most ideal for absolute numbers, because the data are given numerically, rather than percentages.
 **Task 4.3:** What's one thing you learned about how visualization choices affect the story you tell?
 
 **Your answer:**
 
-___________________________________________________________________________
-___________________________________________________________________________
-___________________________________________________________________________
+The axis are quite important to keep your data organized and visually neat. Comprehension matters when comparing data, and the more intricately you express it, the more depth you can achieve.
 
 ---
 
@@ -377,15 +366,43 @@ ___________________________________________________________________________
 **Task 5.1:** Create a stacked proportion bar chart where each bar represents a region and is divided by opinion, with each bar going from 0 to 100%.
 
 **Hint:** Use `position = "fill"` in `geom_col()`.
-```{r stacked-prop, eval=FALSE}
-# Your code here
+```{r stacked-prop, eval=TRUE}
+ggplot(brexit_prop, aes(x = region, y = prop, fill = opinion)) +
+  geom_col(position = "fill") +
+  labs(
+    title = "Was Britain right/wrong to vote to leave EU?",
+    subtitle = "YouGov Survey Results, 2-3 September 2019",
+    caption = "Source: bit.ly/2lCJZVg",
+    x = "Region",
+    y = "Proportion",
+    fill = "Opinion"
+  ) +
+  scale_fill_manual(values = c(
+    "Wrong" = "#ef8a62",
+    "Right" = "#67a9cf",
+    "Don't know" = "gray"
+  )) +
+  scale_y_continuous(labels = percent_format()) +
+  theme_minimal()
 ```
 
 **Task 5.2:** Create a visualization showing only the proportion who said "Wrong" across regions.
-```{r wrong-only, eval=FALSE}
+```{r wrong-only, eval=TRUE}
 brexit_prop %>%
   filter(opinion == "Wrong") %>%
-  # Your code here
+  ggplot(aes(x = region, y = prop, fill = opinion)) +
+  geom_col() +
+  labs(
+    title = "Proportion who said 'Wrong' by Region",
+    subtitle = "YouGov Survey Results, 2-3 September 2019",
+    caption = "Source: bit.ly/2lCJZVg",
+    x = "Region",
+    y = "Proportion",
+    fill = "Opinion"
+  ) +
+  scale_fill_manual(values = c("Wrong" = "#ef8a62")) +
+  scale_y_continuous(labels = percent_format()) +
+  theme_minimal()
 ```
 
 ---
